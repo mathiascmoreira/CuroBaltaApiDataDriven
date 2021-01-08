@@ -27,7 +27,7 @@ namespace Shop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddResponseCompression(options =>
+            services. (options =>
             {
                 options.Providers.Add<GzipCompressionProvider>();
                 options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "application/json" });
@@ -54,12 +54,12 @@ namespace Shop
                 };
             });
 
-            // services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
-            services.AddDbContext<DataContext>(opt => opt
-                .UseSqlServer(Configuration
-                .GetConnectionString("connectionString")));
+            services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
+            //services.AddDbContext<DataContext>(opt => opt
+            //    .UseSqlServer(Configuration
+            //    .GetConnectionString("connectionString")));
 
-            services.AddScoped<DataContext, DataContext>();
+            // services.AddScoped<DataContext, DataContext>(); O AddDbContext já faz o AddScoped para o data context
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shop Api", Version = "v1" });
